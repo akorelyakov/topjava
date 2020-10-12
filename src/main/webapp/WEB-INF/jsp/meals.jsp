@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,7 +23,7 @@
             <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
             <c:set var="excessClass" value="${meal.excess ? 'excess': 'normal'}"/>
             <tr class="${excessClass}">
-                <td>${meal.dateTime}</td>
+                <td>${meal.dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh-mm"))}</td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
                 <td><a href="/">Edit</a></td>
