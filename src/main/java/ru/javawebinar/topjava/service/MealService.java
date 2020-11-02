@@ -13,7 +13,6 @@ public class MealService {
 
     public MealService(MealRepository repository) {
         this.repository = repository;
-
     }
 
     public Meal create(int userId, Meal meal) {
