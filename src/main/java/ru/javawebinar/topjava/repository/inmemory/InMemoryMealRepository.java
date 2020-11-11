@@ -25,7 +25,6 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.meals.forEach(meal -> save(USER_ID, meal));
         save(USER_ID, new Meal(LocalDateTime.of(2020, Month.NOVEMBER, 4, 14, 0), "Юзер ланч", 510));
         save(USER_ID, new Meal(LocalDateTime.of(2020, Month.NOVEMBER, 4, 21, 0), "Юзер ужин", 1500));
         save(USER_ID, new Meal(LocalDateTime.of(2020, Month.NOVEMBER, 6, 21, 0), "Юзер ужин", 1500));
@@ -59,12 +58,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        Map<Integer, Meal> meals = repository.getOrDefault(userId, null);
-        return CollectionUtils.isEmpty(meals) ? Collections.emptyList() :
-                meals.values()
-                        .stream()
-                        .sorted(Comparator.comparing(Meal::getDateTime).reversed())
-                        .collect(Collectors.toList());
+        return filterByPredicate(userId, meal -> true);
     }
 
     @Override
@@ -73,8 +67,9 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     private List<Meal> filterByPredicate(int userId, Predicate<Meal> filter) {
-        Collection<Meal> meals = repository.get(userId).values();
-        return meals.stream()
+        Map<Integer, Meal> meals = repository.getOrDefault(userId, null);
+        return meals == null ? Collections.emptyList() :
+                meals.values().stream()
                 .filter(filter)
                 .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
