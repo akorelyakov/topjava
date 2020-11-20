@@ -47,7 +47,7 @@ public class MealServiceTest {
 
     @Test
     public void getNotFoundMeal() {
-        assertThrows(NotFoundException.class, () -> service.get(MEAL_NOT_FOUND, USER_ID));
+        assertThrows(NotFoundException.class, () -> service.get(MEAL_NOT_FOUND_ID, USER_ID));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class MealServiceTest {
 
     @Test
     public void deletedNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () -> service.delete(MEAL_NOT_FOUND, USER_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(MEAL_NOT_FOUND_ID, USER_ID));
     }
 
     @Test

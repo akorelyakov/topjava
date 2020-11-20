@@ -17,7 +17,8 @@ import static ru.javawebinar.topjava.UserTestData.NOT_FOUND;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 @ContextConfiguration({
-        "classpath:spring-inmemory.xml"
+        "classpath:spring-inmemory.xml",
+        "classpath:spring/spring-app.xml"
 })
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerTest {
@@ -29,7 +30,7 @@ public class InMemoryAdminRestControllerTest {
 
     @BeforeClass
     public static void beforeClass() {
-        appCtx = new ClassPathXmlApplicationContext("spring-inmemory.xml");
+        appCtx = new ClassPathXmlApplicationContext("spring-inmemory.xml", "classpath:spring/spring-app.xml");
         log.info("\n{}\n", Arrays.toString(appCtx.getBeanDefinitionNames()));
         controller = appCtx.getBean(AdminRestController.class);
         repository = appCtx.getBean(InMemoryUserRepository.class);
