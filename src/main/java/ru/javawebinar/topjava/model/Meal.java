@@ -12,8 +12,6 @@ import java.time.LocalTime;
         @NamedQuery(name = Meal.BETWEEN, query = "SELECT m FROM Meal m WHERE m.user.id=:user_id AND m.dateTime >=: " +
                 "start_date_time AND m.dateTime <: " +
                 "end_date_time ORDER BY m.dateTime DESC"),
-        @NamedQuery(name = Meal.UPDATE, query = "UPDATE Meal m SET m.calories=:calories, m.description=:description, " +
-                "m.dateTime=:date_time WHERE m.id=:id AND m.user.id=:user_id"),
         @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m WHERE m.user.id=:user_id ORDER BY m" +
                 ".dateTime DESC")
 })
@@ -26,7 +24,6 @@ public class Meal extends AbstractBaseEntity {
     public static final String GET = "Meal.get";
     public static final String ALL_SORTED = "Meal.getAllSorted";
     public static final String BETWEEN = "Meal.getBetweenHalfOpen";
-    public static final String UPDATE = "Meal.update";
 
     @Column(name = "date_time", nullable = false, columnDefinition = "timestamp")
     @NotNull

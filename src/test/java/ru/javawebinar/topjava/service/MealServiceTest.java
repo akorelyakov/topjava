@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.AfterClass;
-import org.junit.AssumptionViolatedException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Stopwatch;
@@ -47,42 +46,26 @@ public class MealServiceTest {
     //https://junit.org/junit4/javadoc/4.12/org/junit/rules/Stopwatch.html
     private static void logInfo(Description description, String status, long nanos) {
         String testName = description.getMethodName();
-        log.info(String.format("Test %s %s, spent %d microseconds",
-                testName, status, TimeUnit.NANOSECONDS.toMicros(nanos)));
+        log.debug(String.format("Test %s %s, spent %d milliseconds",
+                testName, status, TimeUnit.MILLISECONDS.toSeconds(nanos)));
     }
 
     @Rule
     public Stopwatch stopwatch = new Stopwatch() {
         @Override
-        protected void succeeded(long nanos, Description description) {
-            logInfo(description, "succeeded", nanos);
-            executionTimeTests.put(description.getMethodName(), TimeUnit.NANOSECONDS.toMicros(nanos));
-        }
-
-        @Override
-        protected void failed(long nanos, Throwable e, Description description) {
-            logInfo(description, "failed", nanos);
-            executionTimeTests.put(description.getMethodName(), TimeUnit.NANOSECONDS.toMicros(nanos));
-        }
-
-        @Override
-        protected void skipped(long nanos, AssumptionViolatedException e, Description description) {
-            logInfo(description, "skipped", nanos);
-            executionTimeTests.put(description.getMethodName(), TimeUnit.NANOSECONDS.toMicros(nanos));
-        }
-
-        @Override
         protected void finished(long nanos, Description description) {
             logInfo(description, "finished", nanos);
-            executionTimeTests.put(description.getMethodName(), TimeUnit.NANOSECONDS.toMicros(nanos));
+            executionTimeTests.put(description.getMethodName(), TimeUnit.MILLISECONDS.toSeconds(nanos));
         }
     };
 
     @AfterClass
     public static void printExecutionTime() {
         log.info("\n==============================================================================================\n" +
-                "Time for each test in microseconds:\n" +
-                "" + executionTimeTests.toString());
+                "Time for each test in milliseconds:\n");
+        for (Map.Entry<String, Long> entry : executionTimeTests.entrySet()) {
+            log.info(entry.getKey() + " = " + TimeUnit.MILLISECONDS.toMillis(entry.getValue()));
+        }
     }
 
     @Test
