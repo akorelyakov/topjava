@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,8 +19,11 @@ public class MealService {
 
     private final MealRepository repository;
 
-    public MealService(MealRepository repository) {
+    private final UserRepository userRepository;
+
+    public MealService(MealRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     public Meal get(int id, int userId) {
@@ -46,5 +50,11 @@ public class MealService {
     public Meal create(Meal meal, int userId) {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
+    }
+
+    public Meal getWithUser(int id, int userId) {
+        Meal meal = repository.get(id, userId);
+        meal.setUser(userRepository.get(userId));
+        return meal;
     }
 }
