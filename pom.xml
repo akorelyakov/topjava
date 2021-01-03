@@ -58,6 +58,11 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+<!--                    <excludes>-->
+<!--                        <exclude>**/Test*.java</exclude>-->
+<!--                        <exclude>**/*Tests.java</exclude>-->
+<!--                        <exclude>**/*TestCase.java</exclude>-->
+<!--                    </excludes>-->
                 </configuration>
             </plugin>
         </plugins>
@@ -206,30 +211,6 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-        </profile>
-
-        <profile>
-            <id>jdbc</id>
-            <properties>
-                <spring.profiles.active>jdbc</spring.profiles.active>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>jpa</id>
-            <properties>
-                <spring.profiles.active>jpa</spring.profiles.active>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>datajpa</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <spring.profiles.active>datajpa</spring.profiles.active>
-            </properties>
         </profile>
 
     </profiles>
