@@ -2,9 +2,11 @@ package ru.javawebinar.topjava.service;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.UserRepository;
@@ -58,6 +60,7 @@ public class UserService {
     }
 
     @Transactional
+    @Profile(Profiles.DATAJPA)
     public User getWithMeals(int id) {
         User user = checkNotFoundWithId(repository.get(id), id);
         user.setMeals(mealRepository.getAll(id));

@@ -58,11 +58,6 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
-<!--                    <excludes>-->
-<!--                        <exclude>**/Test*.java</exclude>-->
-<!--                        <exclude>**/*Tests.java</exclude>-->
-<!--                        <exclude>**/*TestCase.java</exclude>-->
-<!--                    </excludes>-->
                 </configuration>
             </plugin>
         </plugins>
