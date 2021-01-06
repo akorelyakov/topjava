@@ -4,7 +4,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.User;
@@ -21,11 +20,8 @@ public class UserService {
 
     private final UserRepository repository;
 
-    private final MealRepository mealRepository;
-
-    public UserService(UserRepository repository, MealRepository mealRepository) {
+    public UserService(UserRepository repository) {
         this.repository = repository;
-        this.mealRepository = mealRepository;
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -59,11 +55,8 @@ public class UserService {
         checkNotFoundWithId(repository.save(user), user.id());
     }
 
-    @Transactional
     @Profile(Profiles.DATAJPA)
     public User getWithMeals(int id) {
-        User user = checkNotFoundWithId(repository.get(id), id);
-        user.setMeals(mealRepository.getAll(id));
-        return user;
+        return checkNotFoundWithId(repository.getWithMeals(id), id);
     }
 }
