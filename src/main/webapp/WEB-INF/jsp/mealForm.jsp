@@ -9,7 +9,9 @@
     <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/"/>
     <link rel="stylesheet" href="css/style.css">
 </head>
+    <jsp:include page="fragments/headTag.jsp"/>
 <body>
+    <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <h3><a href="">Home</a></h3>
     <hr>
@@ -33,5 +35,6 @@
         <button onclick="window.history.back()" type="button">Cancel</button>
     </form>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
