@@ -14,7 +14,6 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Repository
@@ -93,7 +92,9 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     private void deleteRoles(User user) {
-        jdbcTemplate.update("DELETE FROM user_roles WHERE user_id =?", user.getId());
+        if (user != null) {
+            jdbcTemplate.update("DELETE FROM user_roles WHERE user_id =?", user.getId());
+        }
     }
 
     private void addRolesToUser(User user) {
@@ -106,15 +107,17 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     private void addRolesToDb(User user) {
-        Set<Role> roles = user.getRoles();
-        int batchSize = roles.size();
-        jdbcTemplate.batchUpdate(
-                "INSERT INTO user_roles (user_id, role) VALUES (?,?)",
-                roles,
-                batchSize,
-                (ps, argument) -> {
-                    ps.setInt(1, user.getId());
-                    ps.setString(2, argument.name());
-                });
+        if (user != null) {
+            Set<Role> roles = user.getRoles();
+            int batchSize = roles.size();
+            jdbcTemplate.batchUpdate(
+                    "INSERT INTO user_roles (user_id, role) VALUES (?,?)",
+                    roles,
+                    batchSize,
+                    (ps, argument) -> {
+                        ps.setInt(1, user.getId());
+                        ps.setString(2, argument.name());
+                    });
+        }
     }
 }
