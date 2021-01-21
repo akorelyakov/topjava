@@ -39,6 +39,7 @@ public class JspMealController extends AbstractMealController {
     public String create(Model model) {
         final Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
         model.addAttribute("meal", meal);
+        model.addAttribute("action", "create");
         return "mealForm";
     }
 
