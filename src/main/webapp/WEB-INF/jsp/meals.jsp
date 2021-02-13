@@ -79,19 +79,19 @@
 
                     <div class="form-group">
                         <label for="dateTime" class="col-form-label"><spring:message code="meal.dateTime"/></label>
-                        <input type="text" class="form-control" id="dateTime" name="dateTime"
+                        <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
                                placeholder="<spring:message code="meal.dateTime"/>">
                     </div>
 
                     <div class="form-group">
                         <label for="description" class="col-form-label"><spring:message code="meal.description"/></label>
-                        <input type="description" class="form-control" id="description" name="description"
+                        <input type="text" class="form-control" id="description" name="description"
                                placeholder="<spring:message code="meal.description"/>">
                     </div>
 
                     <div class="form-group">
                         <label for="calories" class="col-form-label"><spring:message code="meal.calories"/></label>
-                        <input type="calories" class="form-control" id="calories" name="calories"
+                        <input type="number" class="form-control" id="calories" name="calories"
                                placeholder="<spring:message code="meal.calories"/>">
                     </div>
                 </form>
