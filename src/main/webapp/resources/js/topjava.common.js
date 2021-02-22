@@ -1,6 +1,19 @@
 var form;
 
-function makeEditable() {
+function makeEditable(datatableOpts) {
+    ctx.datatableApi = $("#datatable").DataTable(
+        // https://api.jquery.com/jquery.extend/#jQuery-extend-deep-target-object1-objectN
+        $.extend(true, datatableOpts,
+            {
+                "ajax": {
+                    "url": ctx.ajaxUrl,
+                    "dataSrc": ""
+                },
+                "paging": false,
+                "info": true
+            }
+        ));
+
     form = $('#detailsForm');
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
@@ -93,32 +106,4 @@ function renderDeleteBtn(data, type, row) {
     if (type === "display") {
         return "<a onclick='deleteRow(" + row.id + ");'><span class='fa fa-remove'></span></a>";
     }
-}
-
-let failedNote;
-
-function closeNoty() {
-    if (failedNote) {
-        failedNote.close();
-        failedNote = undefined;
-    }
-}
-
-function successNoty(text) {
-    closeNoty();
-    new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + text,
-        type: 'success',
-        layout: "bottomRight",
-        timeout: 1000
-    }).show();
-}
-
-function failNoty(jqXHR) {
-    closeNoty();
-    failedNote = new Noty({
-        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;Error status: " + jqXHR.status,
-        type: "error",
-        layout: "bottomRight"
-    }).show();
 }
