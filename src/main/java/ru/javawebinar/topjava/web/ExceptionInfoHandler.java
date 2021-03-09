@@ -75,11 +75,7 @@ public class ExceptionInfoHandler {
     //    https://stackoverflow.com/questions/538870/should-private-helper-methods-be-static-if-they-can-be-static
     private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
         Throwable rootCause = ValidationUtil.getRootCause(e);
-        if (logException) {
-            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
-        } else {
-            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
-        }
+        logErrorInfo(req, logException, errorType, rootCause);
         return new ErrorInfo(req.getRequestURL(), errorType, rootCause.toString());
     }
 
@@ -88,11 +84,15 @@ public class ExceptionInfoHandler {
         if (errDescription == null) {
             errDescription = rootCause.toString();
         }
+        logErrorInfo(req, logException, errorType, rootCause);
+        return new ErrorInfo(req.getRequestURL(), errorType, errDescription);
+    }
+
+    private static void logErrorInfo(HttpServletRequest req, boolean logException, ErrorType errorType, Throwable rootCause) {
         if (logException) {
             log.error(errorType + " at request " + req.getRequestURL(), rootCause);
         } else {
             log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
         }
-        return new ErrorInfo(req.getRequestURL(), errorType, errDescription);
     }
 }
